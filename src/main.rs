@@ -15,6 +15,9 @@
 #[path = "lessons/5_matchs.rs"]
 mod matchs;
 
+#[path = "lessons/6_if_let_else.rs"]
+mod if_let_else;
+
 // #[path = "projects/temperature_converter.rs"]
 // mod temperature_converter;
 
@@ -81,4 +84,7 @@ fn main() {
 
     // 14. Match
     matchs::matches();
+
+    // 15. If Let else
+    if_let_else::if_let_else();
 }

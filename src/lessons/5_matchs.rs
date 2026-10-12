@@ -1,5 +1,3 @@
-use std::io::ErrorKind::Other;
-
 #[derive(Debug)]
 enum UsState {
     Albama,
@@ -7,11 +5,45 @@ enum UsState {
     NewYork,
 }
 
+impl UsState {
+    fn existed_in(&self, year: u16) -> bool {
+        match self {
+            UsState::Albama => year >= 1819,
+            UsState::Alaska => year >= 1959,
+            UsState::NewYork => year >= 1989,
+        }
+    }
+}
+
 enum Coin {
     Penny,
     Nickel,
     Dime,
     Quarter(UsState),
+}
+
+fn describe_state_quarter_if_let(coin: Coin) -> Option<String> {
+    let Coin::Quarter(state) = coin else {
+        return None;
+    };
+
+    if state.existed_in(1900) {
+        Some(format!("{state:?} is pretty old, for America!"))
+    } else {
+        Some(format!("{state:?} is relatively new."))
+    }
+}
+
+fn describe_state_quarter(coin: Coin) -> Option<String> {
+    if let Coin::Quarter(state) = coin {
+        if state.existed_in(1900) {
+            Some(format!("{state:?} is pretty old, for America!"))
+        } else {
+            Some(format!("{state:?} is relatively new."))
+        }
+    } else {
+        None
+    }
 }
 
 fn add_fancy_hat() {}
@@ -58,4 +90,7 @@ pub(crate) fn matches() {
     // let none = plus_one(None);
     plus_one(Some(5));
     plus_one(None);
+
+    describe_state_quarter(Coin::Quarter(UsState::NewYork));
+    describe_state_quarter_if_let(Coin::Quarter(UsState::NewYork));
 }
